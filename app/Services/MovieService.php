@@ -8,10 +8,14 @@ class MovieService {
   
   public function getMovies($request) {
     $title = $request->title;
+    $per_page = 10;
+    if($request->per_page){
+      $per_page = $request->per_page;
+    }    
     if($title) {
       return Movie::where('title', $title)->get();
     }else {
-      return Movie::get();
+      return Movie::paginate($per_page);
     }
   }
 
